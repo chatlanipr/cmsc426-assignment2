@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
+
 product_list = [
     {'id': 1, 'name': 'Donuts', 'price': 5, 'quantity': 30},
     {'id': 2, 'name': 'Bananas', 'price': 0.45, 'quantity': 50},
