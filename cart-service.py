@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 import requests
+import os
 
 app = Flask(__name__)
 
@@ -7,7 +8,7 @@ app = Flask(__name__)
 # In-memory storage for carts
 carts = {}
 
-PRODUCT_SERVICE_URL = "http://localhost:5000"  # Update this when deploying
+PRODUCT_SERVICE_URL = os.environ.get('PRODUCT_SERVICE_URL', 'http://localhost:5000')
 
 # /cart/{user id} (GET): Retrieve the current contents of a user’s shopping cart, including product names, quantities, and total prices.
 @app.route('/cart/<int:user_id>', methods=['GET'])
@@ -60,4 +61,5 @@ def remove_from_cart(user_id, product_id):
     return jsonify({"message": "Product removed from cart"})
 
 if __name__ == '__main__':
-    app.run(port=5001)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
