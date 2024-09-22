@@ -12,11 +12,11 @@ PRODUCT_SERVICE_URL = os.environ.get('PRODUCT_SERVICE_URL', 'http://localhost:50
 # /cart/{user id} (GET): Retrieve the current contents of a user’s shopping cart, including product names, quantities, and total prices.
 @app.route('/cart/<int:user_id>', methods=['GET'])
 def get_cart(user_id):
-    cart = cart.get(user_id, {}) # find the cart based on user_id, if it doesn't exist then return empty {}
+    current_cart = cart.get(user_id, {}) # find the cart based on user_id, if it doesn't exist then return empty {}
     total = 0
-    for item in cart.values():
+    for item in current_cart.values():
         total += item['price'] * item['quantity']
-    return jsonify({"cart": list(cart.values()), "total": total})
+    return jsonify({"cart": list(current_cart.values()), "total": total})
 
 
 # /cart/{user id}/add/{product id} (POST): Add a specified quantity of a product to the user’s cart
