@@ -22,7 +22,6 @@ def get_product(product_id):
             return jsonify(p), 200
     return 404
 
-
 # /products (POST): Allow the addition of new grocery products to the inventory with information such as name, price, and quantity.
 @app.route('/products', methods=['POST'])
 def add_product():
@@ -35,7 +34,7 @@ def add_product():
         "quantity": data["quantity"]
     }
     product_list.append(added_product)
-    return jsonify(added_product), 201
+    return jsonify(added_product), 201 #return added product json and 201 (created, success) status
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
