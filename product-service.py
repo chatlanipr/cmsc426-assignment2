@@ -18,7 +18,6 @@ def get_products():
     return jsonify(product_list), 200 
 
 
-
 # /products/product id (GET): Get details about a specific product by its unique ID
 @app.route('/products/<int:product_id>', methods=['GET'])
 def get_product(product_id):
@@ -43,5 +42,5 @@ def add_product():
     return jsonify(new_product), 201
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 10000))
     app.run(host='0.0.0.0', port=port)
