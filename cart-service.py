@@ -13,6 +13,7 @@ PRODUCT_SERVICE_URL = os.environ.get('PRODUCT_SERVICE_URL', 'http://localhost:50
 @app.route('/cart/<int:user_id>', methods=['GET'])
 def get_cart(user_id):
     cart = cart.get(user_id, {}) # find the cart based on user_id, if it doesn't exist then return empty {}
+    total = 0
     for item in cart.values():
         total += item['price'] * item['quantity']
     return jsonify({"cart": list(cart.values()), "total": total})
