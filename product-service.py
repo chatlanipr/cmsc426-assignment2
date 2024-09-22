@@ -15,16 +15,15 @@ product_id = len(product_list) #current product_id
 # /products (GET): Retrieve a list of available grocery products, including their names, prices, and quantities in stock.
 @app.route('/products', methods=['GET'])
 def get_products():
-    return jsonify(product_list), 200 
-
+    return jsonify(product_list), 200 #jsonify returns the product_list as a JSON response; return with 200 OK status code
 
 # /products/product id (GET): Get details about a specific product by its unique ID
 @app.route('/products/<int:product_id>', methods=['GET'])
 def get_product(product_id):
-    product = next((p for p in product_list if p['id'] == product_id), None)
+    product = product_list.get(product_id) # obtains specific product from list and then checks to see if it exists
     if product:
         return jsonify(product), 200
-    return jsonify({'message': 'Product not found'}), 404
+    return 404
 
 
 # /products (POST): Allow the addition of new grocery products to the inventory with information such as name, price, and quantity.
