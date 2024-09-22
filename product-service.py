@@ -9,6 +9,7 @@ product_list = [
     {'id': 3, 'name': 'Bread', 'price': 1.50, 'quantity': 100},
     {'id': 4, 'name': 'Fish', 'price': 8, 'quantity': 10},
 ]
+
 product_id = len(product_list) #current product_id
 
 # /products (GET): Retrieve a list of available grocery products, including their names, prices, and quantities in stock.
@@ -27,18 +28,18 @@ def get_product(product_id):
     return jsonify({'message': 'Product not found'}), 404
 
 
-
 # /products (POST): Allow the addition of new grocery products to the inventory with information such as name, price, and quantity.
 @app.route('/products', methods=['POST'])
 def add_product():
+    global product_list
     data = request.json
     new_product = {
-        "id": len(product_list)+1,
+        "id": len(product_list) + 1,
         "name": data["name"],
         "price": data["price"],
         "quantity": data["quantity"]
     }
-    product_list[len(product_list)+1] = new_product
+    product_list.append(new_product)
     return jsonify(new_product), 201
 
 if __name__ == '__main__':
