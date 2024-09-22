@@ -23,7 +23,7 @@ def get_product(product_id):
     product = product_list.get(product_id) # obtains specific product from list and then checks to see if it exists
     if product:
         return jsonify(product), 200
-    return 404
+    return jsonify({'No product found for the given ID'}), 404
 
 
 # /products (POST): Allow the addition of new grocery products to the inventory with information such as name, price, and quantity.
