@@ -66,8 +66,8 @@ def remove_from_cart(user_id, product_id):
         return jsonify({"Product is not in cart"}), 404
     
     # check to see if we can safely delete from 
-    if quantity > cart[user_id][product_id]['quantity']:
-        return jsonify({"Cannot remove more than there exists"}), 404
+    if quantity >= cart[user_id][product_id]['quantity']:
+        del cart[user_id][product_id]
     else:
         cart[user_id][product_id]['quantity'] -= quantity
     
