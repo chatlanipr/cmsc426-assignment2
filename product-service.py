@@ -20,10 +20,10 @@ def get_products():
 # /products/product id (GET): Get details about a specific product by its unique ID
 @app.route('/products/<int:product_id>', methods=['GET'])
 def get_product(product_id):
-    product = product_list.get(product_id) # obtains specific product from list and then checks to see if it exists
-    if product:
-        return jsonify(product), 200
-    return jsonify({'No product found for the given ID'}), 404
+    for p in product_list:
+        if p['id'] == product_id:
+            return jsonify(p), 200
+    return 404
 
 
 # /products (POST): Allow the addition of new grocery products to the inventory with information such as name, price, and quantity.
@@ -31,14 +31,14 @@ def get_product(product_id):
 def add_product():
     global product_list
     data = request.json
-    new_product = {
+    added_product = {
         "id": len(product_list) + 1,
         "name": data["name"],
         "price": data["price"],
         "quantity": data["quantity"]
     }
-    product_list.append(new_product)
-    return jsonify(new_product), 201
+    product_list.append(added_product)
+    return jsonify(added_product), 201
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
