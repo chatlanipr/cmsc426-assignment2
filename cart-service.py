@@ -60,15 +60,14 @@ def add_item_to_cart(user_id, product_id):
 def remove_from_cart(user_id, product_id):
     quantity = request.json.get('quantity', 1)
 
-    if user_id not in cart or product_id not in cart[user_id]:
-        return jsonify({"Could not find user or product"}), 404
-
-    if cart[user_id][product_id]['quantity'] <= quantity:
+    if product_id not in cart[user_id] or user_id not in cart:
+        return jsonify({"Unknown user or product - try your query again"}), 404
+    
+    cart[user_id][product_id]['quantity'] -= quantity
+    if cart[user_id][product_id]['quantity'] <= 0:
         del cart[user_id][product_id]
-    else:
-        cart[user_id][product_id]['quantity'] -= quantity
-
-    return jsonify({"message": "Product removed from cart"})
+        return jsonify({"Deleted entry from cart"})
+    return jsonify({"Removed product(s) from cart"})
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
