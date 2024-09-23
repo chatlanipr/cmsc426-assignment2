@@ -52,8 +52,7 @@ def add_item_to_cart(user_id, product_id):
                 "quantity": quantity
             }
     
-    return jsonify({"Added product to cart"})
-
+    return jsonify({"message": "Product added to cart"})
 
 # /cart/{user id}/remove/{product id} (POST): Remove a specified quantity of a product from the user’s cart
 @app.route('/cart/<int:user_id>/remove/<int:product_id>', methods=['POST'])
@@ -68,6 +67,7 @@ def remove_from_cart(user_id, product_id):
         del cart[user_id][product_id]
         return jsonify({"Deleted entry from cart"}), 200
     return jsonify({"Removed product(s) from cart"}), 200
+
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
