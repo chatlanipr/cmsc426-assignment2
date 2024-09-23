@@ -65,8 +65,8 @@ def remove_from_cart(user_id, product_id):
     cart[user_id][product_id]['quantity'] -= quantity
     if cart[user_id][product_id]['quantity'] <= 0:
         del cart[user_id][product_id]
-        return jsonify({"Deleted entry from cart"}), 200
-    return jsonify({"Removed product(s) from cart"}), 200
+        return jsonify({"message": "Deleted entry from cart"}), 200
+    return jsonify({"message": "Removed product(s) from cart"}), 200
 
 
 if __name__ == '__main__':
