@@ -25,7 +25,7 @@ def add_item_to_cart(user_id, product_id):
     quantity = request.json.get('quantity', 1) # find the quantity from POST; if none specified, then only increment by 1
     response = requests.get(f"{PRODUCT_SERVICE_URL}/products/{product_id}")
     if response.status_code == 404:
-        return jsonify({"Product specified does not exist"}), 404
+        return jsonify({"message": "Product specified does not exist"}), 404
     
     product = response.json()
 
@@ -60,7 +60,7 @@ def remove_from_cart(user_id, product_id):
     quantity = request.json.get('quantity', 1)
 
     if user_id not in cart or product_id not in cart[user_id]:
-        return jsonify({"Unknown user or product - try your query again"}), 404
+        return jsonify({"message": "Unknown user or product - try your query again"}), 404
     
     cart[user_id][product_id]['quantity'] -= quantity
     if cart[user_id][product_id]['quantity'] <= 0:
