@@ -60,24 +60,6 @@ def add_item_to_cart(user_id, product_id):
 def remove_from_cart(user_id, product_id):
     quantity = request.json.get('quantity', 1)
 
-    if user_id not in cart:
-        return jsonify({"User is not in cart"}), 404
-    if product_id not in cart[user_id]:
-        return jsonify({"Product is not in cart"}), 404
-    
-    # check to see if we can safely delete from 
-    if quantity >= cart[user_id][product_id]['quantity']:
-        del cart[user_id][product_id]
-    else:
-        cart[user_id][product_id]['quantity'] -= quantity
-    
-    return jsonify({"Completed; removed product from cart"}), 200
-
-
-@app.route('/cart/<int:user_id>/remove/<int:product_id>', methods=['POST'])
-def remove_from_cart(user_id, product_id):
-    quantity = request.json.get('quantity', 1)
-
     if user_id not in cart or product_id not in cart[user_id]:
         return jsonify({"Could not find user or product"}), 404
 
