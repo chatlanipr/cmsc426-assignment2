@@ -73,6 +73,21 @@ def remove_from_cart(user_id, product_id):
     
     return jsonify({"Completed; removed product from cart"}), 200
 
+
+@app.route('/cart/<int:user_id>/remove/<int:product_id>', methods=['POST'])
+def remove_from_cart(user_id, product_id):
+    quantity = request.json.get('quantity', 1)
+
+    if user_id not in cart or product_id not in cart[user_id]:
+        return jsonify({"Could not find user or product"}), 404
+
+    if cart[user_id][product_id]['quantity'] <= quantity:
+        del cart[user_id][product_id]
+    else:
+        cart[user_id][product_id]['quantity'] -= quantity
+
+    return jsonify({"message": "Product removed from cart"})
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
